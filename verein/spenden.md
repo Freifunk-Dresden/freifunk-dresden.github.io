@@ -18,7 +18,6 @@ Daher bitten wir Betreiber und Nutzer im Umkreis von Dresden, uns bei der Bescha
  - Per [Überweisung](#ueberweisung)
  - Mit einer Bar-/Karten-/NFC-Zahlung bei der [Sprechstunde](/kontakt/) oder einer anderen Veranstaltung
  - Via [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EY8U2TE7MXE3N)
- - Beim Einkauf auf [Amazon via AmazonSmile](https://smile.amazon.de/ch/203-141-18996), ohne mehr zu zahlen
  - Beim Einkauf über [WeCanHelp](http://www.wecanhelp.de/401159001)/[Bildungsspender](http://www.bildungsspender.de/401159001), ohne mehr zu zahlen
  - &Uuml;ber die [Vereins-/F&ouml;rdermitgliedsschaft]({{ "/verein/" | prepend: site.baseurl }})
 
