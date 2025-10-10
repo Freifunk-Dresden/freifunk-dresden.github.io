@@ -1,0 +1,64 @@
+---
+layout:
+---
+
+<!DOCTYPE html>
+<html>
+  <head>
+  	{% include head.html %}
+  </head>
+
+  <body>
+	{% include header.html %}
+	<section id="main" class="container">
+		<header>
+			<h2 class="post-title">Kategorie - {{ page.title }}</h2>
+		</header>
+
+		<div class="row">
+			<div class="8u 12u(3)">
+				{% for post in site.posts %}
+  					{% if post.categories contains page.category %}
+
+  						{% include post_inc.html %}
+
+					{% endif %}
+				{% endfor %}
+			</div>
+
+			<!-- Small Site Boxes -->
+			<div class="4u 12u(3)">
+				<!-- Post Categories -->
+				<div class="box">
+					<h3>Kategorie / Tags</h3>
+					<ul style="list-style: none; margin: 0; padding: 0; text-decoration: none;">
+						{% assign sortedCategories = site.categories | sort %}
+						{% for category in sortedCategories %}
+						<li style="border-bottom: 1px dashed; padding-top: 10px; padding-bottom: 10px;">
+							<a href="{{ site.baseurl }}/news/category/{{ category[0] }}/">{{ category[0] }}</a>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+
+				<!-- RSS-Feed -->
+				<div>
+					<p class="rss-subscribe">
+						<a href="{{ "/feed.xml" | prepend: site.baseurl }}">
+						<span class="fa-stack fa-sm">
+							<i class="fa fa-square-o fa-stack-2x"></i>
+							<i class="fa fa-rss fa-stack-1x"></i>
+						</span>
+						RSS-Feed
+						</a> abonnieren
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{% include footer.html %}
+
+  </body>
+
+</html>

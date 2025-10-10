@@ -1,0 +1,56 @@
+// Duration.
+	$duration-transition:		0.2s;
+
+// Size.
+	$size-border-radius:		6px;
+	$size-element-height:		2em;
+	$size-element-margin:		1.5em;
+
+// Font.
+	$font-family:				'Open Sans', sans-serif;
+	$fancy-font:				'Roboto Slab', sans-serif;
+	$font-family-fixed:			monospace;
+	$font-weight:				300;
+	$font-weight-bold:			600;
+
+// Color.
+	$color-bg:					#f5f5f5;
+	$color-fg:					#333;
+	$color-fg-bold:				#333;
+	$color-fg-light:			#999;
+
+	$color-accent1-bg:			#666;
+	$color-accent1-fg:			mix($color-accent1-bg, #ffffff, 25%);
+	$color-accent1-fg-bold:		black;
+	$color-accent1-fg-light:	mix($color-accent1-bg, #ffffff, 40%);
+
+	$color-accent2-bg:			#dc0067;  // Freifunk Magenta
+	$color-accent2-fg:			mix($color-accent2-bg, #ffffff, 25%);
+	$color-accent2-fg-bold:		white;
+	$color-accent2-fg-light:	mix($color-accent2-bg, #ffffff, 40%);
+
+	$color-accent3-bg:			#ffb400;  // Freifunk Yellow
+	$color-accent3-fg:			mix($color-accent3-bg, #ffffff, 25%);
+	$color-accent3-fg-bold:		black;
+	$color-accent3-fg-light:	mix($color-accent3-bg, #ffffff, 40%);
+
+	$color-accent4-bg:			#009ee0;  // Freifunk Cyan
+	$color-accent4-fg:			mix($color-accent4-bg, #ffffff, 25%);
+	$color-accent4-fg-bold:		black;
+	$color-accent4-fg-light:	mix($color-accent4-bg, #ffffff, 40%);
+
+	$color-accent5-bg:			#111111;
+	$color-accent5-fg:			mix($color-accent5-bg, #ffffff, 25%);
+	$color-accent5-fg-bold:		#ffffff;
+	$color-accent5-fg-light:	mix($color-accent5-bg, #ffffff, 40%);
+
+	$color-border:				#e5e5e5;
+	$color-border-bg:			#f8f8f8;
+
+	$color-border2:				#dddddd;
+	$color-border2-bg:			#f0f0f0;
+
+	$color-header-bg:			#000;
+	$color-header-fg:			#bbb;
+	$color-header-fg-bold:		#fff;
+	$color-header-fg-light:		#999;

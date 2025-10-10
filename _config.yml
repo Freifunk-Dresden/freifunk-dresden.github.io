@@ -1,0 +1,150 @@
+# Site settings
+title: Freifunk Dresden
+tagline: das freie WLAN-Netzwerk für Dresden und Umgebung
+description: > # this means to ignore newlines until "baseurl:"
+ Freifunk Dresden ist eine lokale nicht-kommerzielle Initiative mit dem Ziel, ein WLAN-Netzwerk über Dresden aufzuspannen und freien Internetzugang anzubieten.
+keywords: "freifunk,ff,dresden,freifunk-dresden,ffdd,freifunk-netz,freifunk-communties,verein,rosenwerk,wiki,forum,free-wifi,wifi,wlan,non-commercial,decentralize,dezentral,dezentralisiert,network,netzwerk,mesh,meshnet,meshnetz,meshnetwork,openwrt,nogluon,guestnetwork,gaestenetzwerk,buergernetz,gemeinschaftlich,bmxd,fastd,wireguard,maps,meshviewer,hopglass,grafana,community,communities,freifunk-freiberg,freiberg,freifunk-freital,freital,freifunk-oberlausitz,oberlausitz,freifunk-pirna,pirna,freifunk-tharandt,tharandt"
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "https://www.freifunk-dresden.de" # the base hostname & protocol for your site
+
+excerpt_separator: <!--*-->
+permalink: "news/:year/:month/:day/:title"
+
+paginate_path: "/news/page:num/"
+paginate: 10
+
+plugins:
+  - jekyll-paginate
+  - jekyll-redirect-from
+
+# Build settings
+markdown: kramdown
+exclude: [vendor]
+
+
+# Community and Site Informations
+community:
+  # Metadata
+  name: 'Dresden'
+  meta: 'Freifunk Dresden e. V.'
+  country: 'DE'
+  address_postbox: 'Am Rittergut 14'
+  address_zipcode: '01156 Dresden'
+
+  # Mail Contacts
+  mail_info: 'info@freifunk-dresden.de'
+  mail_vorstand: 'vorstand@freifunk-dresden.de'
+  mail_spenden: 'spenden@freifunk-dresden.de'
+  mail_datenschutz: 'datenschutz@freifunk-dresden.de'
+
+  # Other Contacts
+  github: 'Freifunk-Dresden'
+  matrix: '#ffdd:envs.net'
+  delta_chat: 'https://i.delta.chat/#C339488087AC45A832E41CA1D09DAA28D9F05902&a=diego%40freifunk%2Ddresden.de&g=Freifunk%20Dresden%20e%2E%20V%2E&x=peAD_L7XKfCVA7iZ3j23wFC2&i=XTM-nmdWNfnlo0AtRXk40f1o&s=xuReVy7cRp3-9NTaDlaNoD5K'
+  meshtastic:
+    channel_name: 'Freifunk_DD'
+    channel_key_size: '256'
+    channel_key: '59tQYtqLXNGBHJlIF5gagKLR5NtlatdgYQHecKfSsHU='
+  fediverse: 'ffdd'
+  facebook: 'FreifunkDresden'
+  instagram: 'freifunkdresden'
+
+  url_chat: 'https://chat.freifunk-dresden.de/'
+  url_blog: 'https://github.com/Freifunk-Dresden/Blog#freifunk-dresden-blog'
+  url_forum: 'https://forum.freifunk.net/c/community/dresden'
+  url_kalender: 'https://teamup.com/ks7edwt5ey8j8tvgpf'
+  url_faq: 'https://wiki.freifunk-dresden.de/index.php/Fragen_und_Antworten_(FAQ)'
+
+  url_wiki:  'https://wiki.freifunk-dresden.de/index.php/Hauptseite'
+  url_doku: 'https://wiki.freifunk-dresden.de/index.php/Dokumentation'
+  url_server: 'https://wiki.freifunk-dresden.de/index.php/Server'
+  url_backbones: 'https://wiki.freifunk-dresden.de/index.php/Freifunk_Netzwerk'
+  url_dienste: 'https://wiki.freifunk-dresden.de/index.php/Freifunkdienste'
+
+  url_api: 'https://api.freifunk-dresden.de/'
+  url_nodelist: 'https://wiki.freifunk-dresden.de/index.php/Hotspots'
+  url_netgraph: 'https://grafana.freifunk-dresden.de/'
+  url_map_gmaps: 'https://maps.freifunk-dresden.de/gmaps/'
+  url_map_meshviewer: 'https://meshviewer.freifunk-dresden.de/'
+
+  # Sprechstunde / Treffen
+  url_online-sprechstunde: 'https://talk.freifunk-dresden.de/sprechstunde'
+  url_sprechstunde: 'https://wiki.freifunk-dresden.de/index.php/Freifunk-Sprechstunde'
+  url_treffenthema: 'https://wiki.freifunk-dresden.de/index.php/Sprechstunden-Themen'
+  url_treffenort: 'https://www.openstreetmap.org/node/3140655489#map=13/51.0504/13.7274'
+  url_ronwlan: 'http://10.200.4.180.freifunk-dresden.de/'
+
+  # Router Links
+  url_firmware: 'https://download.freifunk-dresden.de/'
+  url_router: 'https://wiki.freifunk-dresden.de/index.php/Router'
+  url_routerconf: 'anleitung-firmware-einspielen.pdf'
+  url_routerconf_ext: 'https://wiki.freifunk-dresden.de/index.php/Router_einrichten'
+  url_offloaderconfig: 'https://wiki.freifunk-dresden.de/index.php/Offloader_Konfiguration'
+  url_routerpos: 'https://wiki.freifunk-dresden.de/index.php/Aufstellen'
+  url_routerquote: 'https://www.heise.de/preisvergleich/?cat=WL-617380&sort=p'
+
+  # Statistik
+  url_stats_nodes: 'https://grafana.freifunk-dresden.de/render/d-solo/geeqdF6mk/netz-statistik?orgId=1&refresh=5m&from=now-7d&to=now&theme=light&panelId=8&width=1000&height=500&tz=Europe%2FBerlin'
+  url_stats_clients: 'https://grafana.freifunk-dresden.de/render/d-solo/geeqdF6mk/general-stats?orgId=1&refresh=5m&from=now-7d&to=now&theme=light&panelId=10&width=1000&height=500&tz=Europe%2FBerlin'
+  url_stats_exitvpn: 'https://grafana.freifunk-dresden.de/render/d-solo/geeqdF6mk/netz-statistik?orgId=1&refresh=5m&from=now-7d&to=now&theme=light&panelId=26&width=1000&height=500&tz=Europe%2FBerlin'
+  url_stats_versions: 'https://grafana.freifunk-dresden.de/render/d-solo/geeqdF6mk/netz-statistik?orgId=1&refresh=5m&from=now-7d&to=now&theme=light&panelId=19&width=1000&height=500&tz=Europe%2FBerlin'
+
+  # Verein
+  # e.V. Docs
+  doc_satzung: 'https://github.com/Freifunk-Dresden/Dokumente/raw/master/Verein/Satzung_Freifunk_Dresden.pdf'
+  doc_ordnung: 'https://github.com/Freifunk-Dresden/Dokumente/raw/master/Verein/Beitragsordnung_Freifunk_Dresden.pdf'
+  # Vorstand
+  vorstand:
+    - 'Torsten Rudolph (Vorstandsvorsitzender)'
+    - 'Diego Jahn (stellvertretender Vorsitzender)'
+    - 'Niklas Merkelt (Schatzmeister)'
+    - 'Stephan Enderlein (Beisitzer)'
+    - 'Mirko Tomaschek (Beisitzer)'
+
+  # Sub Communities
+  sub_com:
+    - name: 'Freifunk Dresden'
+    - name: 'Freifunk Oberlausitz (O.L.)'
+    - name: 'Freifunk Pirna'
+    - name: 'Freifunk NO (Nord-Ost)'
+    - name: 'Freifunk SO (S&uuml;d-Ost)'
+    - name: 'Freifunk SW (S&uuml;d-West)'
+    - name: 'Freifunk NW (Nord-West)'
+    - name: 'Freifunk Leipzig'
+      link: 'https://freifunk-leipzig.de/'
+    - name: 'Freifunk Geringswalde'
+
+
+  # Projects
+  projects:
+    - name: 'Freifunk'
+      desc: '<a href="https://wiki.freifunk-dresden.de/index.php/Gefl%C3%BCchtetenunterk%C3%BCnfte">Internet für Gefl&uuml;chtete</a>'
+
+    - name: 'Freifunk Richtfunk'
+      desc: '<a href="https://wiki.freifunk-dresden.de/index.php/Richtfunk-Pirna">in Pirna</a>'
+
+    - name: 'Freifunk Installation'
+      desc: '<a href="https://wiki.freifunk-dresden.de/index.php/Adventureland">Adventureland</a> (Paintball)'
+
+    - name: 'Freifunk Installation'
+      desc: '<a href="https://wiki.freifunk-dresden.de/index.php/Elbhangfest">zum Elbhangfest</a>'
+
+
+  # Supporting Members
+  sup_member:
+    - name: 'Physiotherapie Michael Lau'
+      link: 'https://physiotherapie-michael-lau.de'
+
+    - name: 'Ingenieurb&uuml;ro Bauschke'
+      link: 'http://ing-bauschke.de'
+
+
+  # Distributoren
+  distributoren:
+    - name: 'Niklas Merkelt - IT-Service'
+      link: 'https://merkelt.it/'
+      desc: '<img width="230" alt="dist_header" src="https://merkelt.it/images/header.jpg">'
+
+supported_by:
+  url_ehrensache: 'https://dresden.ehrensache.jetzt/'
+

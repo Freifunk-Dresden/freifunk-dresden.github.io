@@ -1,0 +1,10 @@
+*~
+*.sublime-project
+*.sublime-workspace
+/_site
+/.sass-cache
+*.lock
+*.swp
+/.bundle
+/vendor
+.DS_Store

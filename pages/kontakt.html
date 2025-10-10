@@ -1,0 +1,64 @@
+---
+title: Kontakt
+top_url: /kontakt/
+permalink: /kontakt/
+main_menu: true
+weight: 9
+sub_menu: true
+sub_weight: 1
+layout: main
+---
+
+<header>
+	<h2 class="post-title">{{ page.title }}</h2>
+</header>
+
+<p style="text-align: center;">Wir freuen uns, wenn du Kontakt mit uns aufnimmst, sei es pers&ouml;nlich bei einem unserer Treffen oder &uuml;ber das Internet.</p>
+
+<section class="box">
+		<h2>Persönlich</h2>
+		<p>Wir bieten wöchentliche Sprechstunden an.</p>
+		<ul class="alt">
+			<li>
+				<i class="fa fa-people-arrows fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Sprechstunde<br />
+				<i class="fa fa-people-arrows fa-fw" aria-hidden="true" style="visibility: hidden;"></i>&nbsp;&nbsp;<span style="font-size: 0.8em;"><a href="{{ "/kontakt/sprechstunde/" | prepend: site.baseurl }}">Alle Infos</a></span>
+			</li>
+		</ul>
+</section>
+
+
+	<div class="box" id="online">
+		<h2>Im Netz</h2>
+		<p>Du kannst uns über folgende Kanäle erreichen:</p>
+		<ul class="alt">
+			<li>
+				<i class="fa fa-envelope-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;E-Mail<br />
+				<i class="fa fa-envelope-o fa-fw" aria-hidden="true" style="visibility: hidden;"></i>&nbsp;&nbsp;<span style="font-size: 0.8em;">Allgemein: <a href="mailto:{{ site.community.mail_info }}">{{ site.community.mail_info }}</a> | Vorstand: <a href="mailto:{{ site.community.mail_vorstand }}">{{ site.community.mail_vorstand }}</a></span>
+			</li>
+			<li>
+				<i class="fa fa-comments-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Matrix Chat<br />
+				<i class="fa fa-comments-o fa-fw" aria-hidden="true" style="visibility: hidden;"></i>&nbsp;&nbsp;<span style="font-size: 0.8em;"><a href="https://matrix.to/#/{{ site.community.matrix }}">{{ site.community.matrix | remove: 'https://matrix.to/#/' }}</a></span>
+			</li>
+			<li>
+				<i class="fa-regular fa-message fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Delta Chat<br />
+				<i class="fa fa-message fa-fw" aria-hidden="true" style="visibility: hidden;"></i>&nbsp;&nbsp;<span style="font-size: 0.8em;">Gruppe: <a href="{{ site.community.delta_chat }}">Freifunk Dresden e. V.</a></span>
+			</li>
+			<li>
+				<i class="fa-solid fa-satellite-dish fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;<a href="https://meshtastic.org/">Meshtastic</a><br />
+				<i class="fa-solid fa-satellite-dish fa-fw" aria-hidden="true" style="visibility: hidden;"></i>&nbsp;&nbsp;<span style="font-size: 0.8em;">Channel: <code>{{ site.community.meshtastic.channel_name }}</code>, Key: <code>{{ site.community.meshtastic.channel_key }}</code> ({{site.community.meshtastic.channel_key_size}}&nbsp;bit)</span>
+			</li>
+			<li>
+				<i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Fediverse<br />
+				<i class="fa fa-newspaper-o fa-fw" aria-hidden="true" style="visibility: hidden;"></i>&nbsp;&nbsp;<span style="font-size: 0.8em;"><a href="https://pleroma.envs.net/{{ site.community.fediverse }}">@{{ site.community.fediverse }}@pleroma.envs.net</a></span>
+			</li>
+			<li>
+				<i class="fa fa-facebook fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Facebook<br />
+				<i class="fa fa-facebook fa-fw" aria-hidden="true" style="visibility: hidden;"></i>&nbsp;&nbsp;<span style="font-size: 0.8em;"><a href="https://www.facebook.com/{{ site.community.facebook }}">{{ site.community.facebook }}</a></span>
+			</li>
+			<li>
+				<i class="fa fa-forumbee fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;Forum<br />
+				<i class="fa fa-forumbee fa-fw" aria-hidden="true" style="visibility: hidden;"></i>&nbsp;&nbsp;<span style="font-size: 0.8em;"><a href="{{ site.community.url_forum }}">{{ site.community.url_forum | remove: 'https://' | remove: 'http://' }}</a></span>
+			</li>
+		</ul>
+	</div>
+</section>

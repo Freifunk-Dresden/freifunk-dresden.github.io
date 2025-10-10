@@ -1,0 +1,71 @@
+---
+title: Info
+layout:
+permalink: /
+---
+
+<!DOCTYPE html>
+<html>
+  <head>
+    {% include head.html %}
+  </head>
+  <body class="landing">
+
+    {% include header.html %}
+
+	<section id="banner">
+		<h2>{{ site.title }}</h2>
+		<p>Wir bauen ein regionales WLAN-Netzwerk in Dresden und Umgebung und bieten dabei freien Internetzugang an.</p>
+	</section>
+
+	<section id="main" class="container">
+		<section class="special action">
+			<p>Dafür benötigen wir deine Unterstützung!</p>
+			<ul class="actions">
+				<li><a href="{{ "/kontakt/sprechstunde/" | prepend: site.baseurl }}" class="button alt2special icon fa-calendar-week">Komm zum nächsten Treffen</a></li>
+				<li><a href="{{ "/mitmachen/" | prepend: site.baseurl }}" class="button special icon fa-users">Mach mit!</a></li>
+			</ul>
+		</section>
+		<section class="box" id="news">
+			{% assign post = site.posts.first %}
+			{% assign content = post.content %}
+			<h2><strong class="in-line-highlight">{{ post.title }}</strong></h2>
+			<p>{{ post.content | markdownify | truncatewords: 25 }}</p>
+			<p><a href="{{ "/news/" | prepend: site.baseurl }}" class="button special">Weiterlesen</a></p>
+		</section>
+		<section class="box special features">
+			<header class="major">
+				<h2>Freifunk ist mehr als kostenloses Internet!</h2>
+				<p class="large">Hier bieten Menschen wie du und ich Inhalte und Dienste in einem regionalen Netzwerk an, welches immer ohne Verträge oder die Angabe von persönlichen Daten von jedem nutzbar ist.</p>
+			</header>
+			<div class="features-row">
+				<section>
+					<span class="icon major accent2 fa fa-unlock-alt fa-1x"></span>
+					<h3>öffentlich und nicht kommerziell</h3>
+					<p>Die Idee von Freifunk ist es, mittels handelsüblicher WLAN-Accesspoints ein unabhängiges, stadtübergreifendes Netzwerk aufzubauen. Idealerweise können alle Knoten im Netzwerk miteinander kommunizieren, auch wenn diese über keine direkte Internetverbindung verfügen.</p>
+				</section>
+				<section>
+					<span class="icon major accent3 fa fa-users fa-1x"></span>
+					<h3>gemeinschaftlich betrieben</h3>
+					<p>Jeder mit einem WLAN-fähigen Gerät kann am Netzwerk teilnehmen, und es sogar selbst unterstützen. Mit einem eigenen Accesspoint kannst du das Netz erweitern und stabilisieren, sowie einen Internet-Hotspot für alle bereitstellen.</p>
+				</section>
+			</div>
+			<div class="features-row">
+				<section>
+					<span class="icon major accent4 fa fa-user-secret fa-1x"></span>
+					<h3>anonym zugänglich und trotzdem rechtssicher</h3>
+					<p>Freifunk ist ein offenes Netz, ohne Passwörter oder verpflichtende Registrierungsformulare. Du musst trotzdem keine Angst vor der Störerhaftung haben: Um jeglichen rechtlichen Problemen aus dem Weg zu gehen, wird der Internetverkehr von uns über ein VPN abgewickelt.</p>
+				</section>
+				<section>
+					<span class="icon major accent5 fa fa-cogs fa-1x"></span>
+					<h3>dezentral organisiert</h3>
+					<p>In Gebieten mit geringer Freifunk-Abdeckung nutzen wir einen Teil deiner Internetverbindung, um sicheren Zugang zum Freifunk-Netz bereitzustellen. Mit zunehmendem Ausbau des Netzes wird sich dein Freifunk-Zugangspunkt zu benachbarten Knoten verbinden. Verbindungen werden dann zunehmend über das Mesh-Netz geleitet.</p>
+				</section>
+			</div>
+		</section>
+	 </section>
+    {% include footer.html %}
+
+  </body>
+
+</html>

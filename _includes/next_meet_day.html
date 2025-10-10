@@ -1,0 +1,288 @@
+<script>
+	var nextDateStr;
+	moment.locale('de');
+	
+	// Meeting pattern: 8-meeting cycle starting from 2025-08-06
+	// Meetings 1-3: Wednesday online
+	// Meeting 4: Wednesday in person
+	// Meetings 5-7: Wednesday online  
+	// Meeting 8: Thursday in person
+	// Then repeat cycle
+	
+	// First meeting (Wednesday online) in Berlin time
+	var cycleStart = moment("2024-12-25");
+	var cycleLength = 8; // 8 meetings per cycle
+	var weekLength = 7; // 7 days between meetings
+	
+	// CANCELLED MEETINGS: Add dates of cancelled meetings here
+	// Format: "YYYY-MM-DD" (the date the meeting was supposed to happen)
+	var cancelledMeetings = [
+		// "2025-09-25", // Example: cancel the in-person meeting on 2025-09-25
+		// "2025-10-01", // Example: cancel the online meeting on 2025-10-01
+		"2025-12-24", // cancel the online meeting on 2025-12-24
+		// "2025-12-31", // cancel the online meeting on 2025-12-31
+	];
+	
+	// SIMULATION MODE: Set this to a specific date and time to test the algorithm
+	// Set to null to use current date, or set to a specific date like "2025-08-15T19:30"
+	var simulationDate = null; // Change this to test: e.g., "2025-09-18T18:00", "2025-09-17T19:30", etc.
+	
+	// Function to get the current date (either real or simulated)
+	// Always calculate in Berlin time for accurate meeting times
+	function getCurrentDate() {
+		if (simulationDate) {
+			// If simulation date is provided, treat it as Berlin time
+			return moment(simulationDate);
+		}
+		// Get current time in Berlin timezone using browser's native timezone handling
+		var now = new Date();
+		var berlinTime = new Date(now.toLocaleString("en-US", {timeZone: "Europe/Berlin"}));
+		return moment(berlinTime);
+	}
+	
+	// Function to check if a meeting is cancelled
+	function isMeetingCancelled(meetingDate) {
+		var dateStr = meetingDate.format("YYYY-MM-DD");
+		return cancelledMeetings.indexOf(dateStr) !== -1;
+	}
+	
+	function getNextMeetingDate() {
+		var now = getCurrentDate(); // Use simulated or real date
+		var nextDate;
+		var nextMeeting;
+		
+		// If we're before the start date, first meeting is meeting 1
+		if (now.isBefore(cycleStart)) {
+			nextMeeting = 1;
+			nextDate = cycleStart.clone();
+		} else {
+			// Calculate how many meetings have passed since the start
+			var daysSinceStart = now.diff(cycleStart, 'days');
+			var weeksSinceStart = Math.floor(daysSinceStart / weekLength);
+			var meetingsPassed = weeksSinceStart;
+			
+			// Find which meeting number we're at in the current cycle
+			var currentMeetingInCycle = (meetingsPassed % cycleLength) + 1;
+			
+			// Calculate the date of the current meeting in the cycle
+			var currentCycleStart = cycleStart.clone().add(Math.floor(meetingsPassed / cycleLength) * cycleLength, 'weeks');
+			var currentMeetingDate = currentCycleStart.clone().add(currentMeetingInCycle - 1, 'weeks');
+			
+			// Adjust for Thursday meetings (meeting 8 in each cycle)
+			if (currentMeetingInCycle % cycleLength === 0) {
+				currentMeetingDate.add(1, 'day');
+			}
+			
+			// If the current meeting date is in the future or today, that's our next meeting
+			if (currentMeetingDate.isSameOrAfter(now, 'day')) {
+				nextMeeting = currentMeetingInCycle;
+				nextDate = currentMeetingDate;
+			} else {
+				// Otherwise, find the next meeting
+				nextMeeting = currentMeetingInCycle + 1;
+				
+				// If we've reached the end of the cycle, start the next cycle
+				if (nextMeeting > cycleLength) {
+					nextMeeting = 1;
+					currentCycleStart.add(cycleLength, 'weeks');
+				}
+				
+				nextDate = currentCycleStart.clone().add(nextMeeting - 1, 'weeks');
+				
+				// Adjust for Thursday meetings (meeting 8 in each cycle)
+				if (nextMeeting % cycleLength === 0) {
+					nextDate.add(1, 'day');
+				}
+			}
+			
+			// Skip cancelled meetings by advancing to the next meeting
+			while (isMeetingCancelled(nextDate)) {
+				nextMeeting++;
+				
+				// If we've reached the end of the cycle, start the next cycle
+				if (nextMeeting > cycleLength) {
+					nextMeeting = 1;
+					currentCycleStart.add(cycleLength, 'weeks');
+				}
+				
+				nextDate = currentCycleStart.clone().add(nextMeeting - 1, 'weeks');
+				
+				// Adjust for Thursday meetings (meeting 8 in each cycle)
+				if (nextMeeting % cycleLength === 0) {
+					nextDate.add(1, 'day');
+				}
+			}
+		}
+		
+		return {
+			date: nextDate,
+			meetingNumber: nextMeeting,
+			isOnline: !(nextMeeting % 4 === 0), // Meetings 4 and 8 are in person
+			isThursday: nextMeeting % cycleLength === 0 // Meeting 8 is Thursday
+		};
+	}
+	
+	var nextMeeting = getNextMeetingDate();
+	var nextDate = nextMeeting.date;
+	
+	if (nextDate.isSame(getCurrentDate(), 'day')) {
+		nextDateStr = "<strong>heute</strong>";
+	} else {
+		nextDateStr = "am ";
+		if (nextDate.isSameOrBefore(getCurrentDate().add(7, 'days'))) {
+			nextDateStr += "kommenden ";
+		}
+		nextDateStr += "<strong>" + nextDate.format("dddd") + "</strong>, den <span style=\"white-space: nowrap;\"><strong>" + nextDate.format("DD. MMMM") + "</strong></span>";
+	}
+	
+	// Add meeting type info with Font Awesome icons
+	var now = getCurrentDate();
+	var meetingDate = nextMeeting.date;
+	var isMeetingDay = meetingDate.isSame(now, 'day');
+	var currentHour = now.hour();
+	var meetingHour = 19; // 19:00 Uhr
+	
+	// Compute pre-join window (<= 15 minutes before start)
+	var meetingTimeForIcon = meetingDate.clone().hour(meetingHour).minute(0).second(0);
+	var minutesToStartForIcon = Math.ceil((meetingTimeForIcon.diff(now)) / (1000 * 60));
+	var isPreJoinWindow = isMeetingDay && minutesToStartForIcon <= 15 && minutesToStartForIcon >= 0;
+	
+	var meetingType;
+	if (nextMeeting.isOnline) {
+		// For online meetings, check the time to determine link behavior
+		// Link to Jitsi if ongoing or in pre-join window; otherwise anchor
+		if ((isMeetingDay && currentHour >= meetingHour) || isPreJoinWindow) {
+			meetingType = "<strong>online</strong>.<br><div style=\"display: block; text-align: center; margin-top: 1em; padding-top: 2em;\"><a href=\"{{ site.community.url_online-sprechstunde }}\" target=\"_blank\" class=\"ff-icon-link\"><i class=\"fa fa-microphone-lines ff-icon ff-pink\" aria-hidden=\"true\" style=\"font-size: 3.0em;\"></i></a></div>";
+		} else {
+			// Before 19:00 or not meeting day, link to anchor
+			// meetingType = "<strong>online</strong>.<br><div style=\"display: block; text-align: center; margin-top: 1em; padding-top: 2em;\"><a href=\"#online\" class=\"ff-icon-link\"><i class=\"fa fa-microphone-lines ff-icon ff-pink\" aria-hidden=\"true\" style=\"font-size: 3.0em;\"></i></a></div>";
+			meetingType = "<strong>online</strong>.<br><div style=\"display: block; text-align: center; margin-top: 1em; padding-top: 2em;\"><a class=\"ff-icon-link\" onclick=\"return false;\"><i class=\"fa fa-microphone-lines ff-icon ff-pink\" aria-hidden=\"true\" style=\"font-size: 3.0em;\"></i></a></div>";
+		}
+	} else {
+		// For in-person meetings, link to Rosenwerk anchor if within 15 min of start or during meeting hours (19-21)
+		if ((isMeetingDay && currentHour >= meetingHour && currentHour < 21) || isPreJoinWindow) {
+			meetingType = "im <strong>Rosenwerk</strong>.<br><div style=\"display: block; text-align: center; margin-top: 1em; padding-top: 2em;\"><a href=\"#rosenwerk\" class=\"ff-icon-link\"><i class=\"fa fa-map-location-dot ff-icon ff-cyan\" aria-hidden=\"true\" style=\"font-size: 3.0em;\"></i></a></div>";
+		} else {
+			// Before 19:00, after 21:00, or not meeting day, no link
+			// meetingType = "im <strong>Rosenwerk</strong>.<br><div style=\"display: block; text-align: center; margin-top: 1em; padding-top: 2em;\"><a href=\"#rosenwerk\" class=\"ff-icon-link\"><i class=\"fa fa-map-location-dot ff-icon ff-cyan\" aria-hidden=\"true\" style=\"font-size: 3.0em;\"></i></a></div>";
+			meetingType = "im <strong>Rosenwerk</strong>.<br><div style=\"display: block; text-align: center; margin-top: 1em; padding-top: 2em;\"><a class=\"ff-icon-link\" onclick=\"return false;\"><i class=\"fa fa-map-location-dot ff-icon ff-cyan\" aria-hidden=\"true\" style=\"font-size: 3.0em;\"></i></a></div>";
+		}
+	}
+	nextDateStr += " ab <strong>19:00&nbsp;Uhr</strong> " + meetingType;
+	
+	// Add day count (only show if not the meeting day)
+	if (!isMeetingDay) {
+		var daysUntilMeeting = nextDate.diff(now, 'days') + 1; // Add 1 to count calendar days
+		if (daysUntilMeeting > 1) {
+			nextDateStr += '<div style="text-align: center; margin-top: 0.5em; font-size: 0.8em; color: #999;"><i class="fa fa-calendar-days" style="margin-right: 5px;"></i>in ' + daysUntilMeeting + ' Tagen</div>';
+		} else if (daysUntilMeeting === 1) {
+			nextDateStr += '<div style="text-align: center; margin-top: 0.5em; font-size: 0.8em; color: #999;"><i class="fa fa-calendar-days" style="margin-right: 5px;"></i>in 1 Tag</div>';
+		}
+	}
+	
+	// Show status indicator for both online and in-person meetings
+	
+	if (isMeetingDay) {
+		// Check if meeting is currently active (started but not ended)
+		var isMeetingActive = currentHour >= meetingHour;
+		var isMeetingEnded = false;
+		if (!nextMeeting.isOnline) {
+			// For in-person meetings, also check if it's before 21:00
+			isMeetingActive = isMeetingActive && currentHour < 21;
+			isMeetingEnded = currentHour >= 21;
+		}
+		
+		if (isMeetingActive) {
+			// Meeting has started - show how long it's been running
+			var meetingStartTime = meetingDate.clone().hour(meetingHour).minute(0).second(0);
+			var timeRunning = now.diff(meetingStartTime);
+			var minutesRunning = Math.floor(timeRunning / (1000 * 60));
+			
+			var runningText;
+			if (minutesRunning === 0) {
+				runningText = "beginnt jetzt";
+			} else if (minutesRunning < 60) {
+				runningText = "läuft seit " + minutesRunning + " min";
+			} else {
+				var hours = Math.floor(minutesRunning / 60);
+				var minutes = minutesRunning % 60;
+				if (minutes === 0) {
+					runningText = "läuft seit " + hours + " h";
+				} else {
+					runningText = "läuft seit " + hours + " h " + minutes + " min";
+				}
+			}
+			
+			if (nextMeeting.isOnline) {
+				// Online meeting - link to Jitsi
+				nextDateStr += '<div style="text-align: center; margin-top: 0.5em; font-size: 0.8em; color: #666; white-space: nowrap;"><a href="{{ site.community.url_online-sprechstunde }}" target="_blank" style="color: #e20074; text-decoration: none;"><i class="fa fa-right-to-bracket" style="margin-right: 5px;"></i>' + runningText + '</a></div>';
+			} else {
+				// In-person meeting - link to Rosenwerk section
+				var meetingEndTime = meetingDate.clone().hour(21).minute(0).second(0);
+				var isMeetingEnded = now.isAfter(meetingEndTime);
+				
+				if (isMeetingEnded) {
+					nextDateStr += '<div style="text-align: center; margin-top: 0.5em; font-size: 0.8em; color: #999; white-space: nowrap;"><i class="fa fa-people-arrows" style="margin-right: 5px;"></i>beendet seit 21:00&nbsp;Uhr</div>';
+				} else {
+					nextDateStr += '<div style="text-align: center; margin-top: 0.5em; font-size: 0.8em; color: #666; white-space: nowrap;"><a href="#rosenwerk" style="color: #00b0f0; text-decoration: none;"><i class="fa fa-people-arrows" style="margin-right: 5px;"></i>' + runningText + '</a></div>';
+				}
+			}
+		} else if (isMeetingEnded) {
+			// Meeting has ended (for in-person meetings after 21:00)
+			nextDateStr += '<div style="text-align: center; margin-top: 0.5em; font-size: 0.8em; color: #999; white-space: nowrap;"><i class="fa fa-people-arrows" style="margin-right: 5px;"></i>beendet seit 21:00&nbsp;Uhr</div>';
+		} else {
+			// Check if it's within 15 minutes of starting
+			var meetingTime = meetingDate.clone().hour(meetingHour).minute(0).second(0);
+			var timeRemaining = meetingTime.diff(now);
+			var minutesRemaining = Math.ceil(timeRemaining / (1000 * 60));
+			
+			if (minutesRemaining <= 15) {
+				// About to start - link like ongoing state (Jitsi for online, Rosenwerk anchor for in-person)
+				var preJoinLink = nextMeeting.isOnline
+					? '<a href=\"{{ site.community.url_online-sprechstunde }}\" target=\"_blank\" style=\"color: inherit; text-decoration: none;\">'
+					: '<a href=\"#rosenwerk\" style=\"color: inherit; text-decoration: none;\">';
+				nextDateStr += '<div style=\"text-align: center; margin-top: 0.5em; font-size: 0.8em; color: #ffb400; white-space: nowrap;\">' +
+					preJoinLink + '<i class=\"fa fa-hourglass-half\" style=\"margin-right: 5px;\"></i>beginnt in ' + minutesRemaining + ' min</a></div>';
+			} else {
+				// Meeting hasn't started yet - show time remaining
+				var timeText;
+				if (minutesRemaining >= 60) {
+					// More than 1 hour remaining - show approximate hours with half-hour precision
+					var hours = minutesRemaining / 60;
+					var halfHours = Math.round(hours * 2) / 2;
+					
+					// Check if the rounded time is exactly on a half-hour or hour mark
+					var isExact = Math.abs(hours - halfHours) < 0.01; // Allow small floating point differences
+					
+					if (halfHours % 1 === 0) {
+						// Exact hours
+						timeText = (isExact ? "" : "ca. ") + halfHours + " h";
+					} else {
+						// Half hours
+						timeText = (isExact ? "" : "ca. ") + Math.floor(halfHours) + "½ h";
+					}
+				} else {
+					// Less than 1 hour remaining - show exact minutes
+					timeText = minutesRemaining + " min";
+				}
+				
+				nextDateStr += '<div style="text-align: center; margin-top: 0.5em; font-size: 0.8em; color: #999; white-space: nowrap;"><i class="fa fa-clock-o" style="margin-right: 5px;"></i>beginnt in ' + timeText + '</div>';
+			}
+		}
+	}
+	
+	// Update the HTML with the final result
+	$('#next_meet_date').html(nextDateStr);
+</script>
+<script>
+	// Inject scoped styles for icon hover transitions (matching button accent colors)
+	(function() {
+		var styleEl = document.getElementById('next_meet_day_styles');
+		if (!styleEl) {
+			styleEl = document.createElement('style');
+			styleEl.id = 'next_meet_day_styles';
+			styleEl.textContent = '\n#next_meet_date .ff-icon { transition: color 0.2s ease-in-out; }\n#next_meet_date a.ff-icon-link { display: inline-block; text-decoration: none !important; border-bottom: none !important; padding: 0; margin: 0; }\n#next_meet_date a.ff-icon-link:hover { text-decoration: none !important; border-bottom: none !important; }\n#next_meet_date a.ff-icon-link:active { text-decoration: none !important; border-bottom: none !important; }\n#next_meet_date .ff-icon.ff-pink { color: #dc0067; }\n#next_meet_date .ff-icon.ff-cyan { color: #009ee0; }\n#next_meet_date a.ff-icon-link[href]:hover .ff-icon.ff-pink { color: rgb(245.5, 0, 114.9386363636); }\n#next_meet_date a.ff-icon-link[href]:hover .ff-icon.ff-cyan { color: rgb(0, 175.9866071429, 249.5); }\n';
+			document.head.appendChild(styleEl);
+		}
+	})();
+</script>

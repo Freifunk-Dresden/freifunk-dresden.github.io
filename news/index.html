@@ -1,0 +1,136 @@
+---
+title: News
+top_url: /news/
+layout:
+---
+
+<!DOCTYPE html>
+<html>
+	<head>
+	    {% include head-news.html %}
+    </head>
+	<body>
+	{% include header.html %}
+	<section id="main" class="container">
+		
+		<header>
+			<h2 class="post-title" style="text-align: center;">{{ page.title }} &uuml;ber Freifunk {{ site.community.name }}</h2>
+		</header>
+
+		<div class="row">
+			<div class="8u 12u(2)">
+				<!-- Post -->
+				{% for post in paginator.posts %}
+
+					{% include post_inc.html %}
+
+				{% endfor %}
+			</div>
+
+			<!-- Small Site Boxes -->
+			<div class="4u 12u(2)">
+				<!-- Next Meet Day -->				
+				<section class="box" id="naechster-termin">
+					<h3>Nächstes Treffen</h3>
+					<p>Wir treffen uns wieder <span id="next_meet_date">am <strong>Mittwoch</strong> ab <strong>19:00 Uhr</strong>.</span></p>
+					{% include next_meet_day.html %}
+					<ul class="actions align-center">
+						<li><a href="{{ "/kontakt/sprechstunde/" | prepend: site.baseurl }}" class="button small accent2">Weitere Infos</a></li>
+						<!--li><span style="font-size: 1.0em;"><a href="{{ "/kontakt/sprechstunde/" | prepend: site.baseurl }}">Weitere Infos</a></span></li-->
+					</ul>
+				</section>
+
+				<div class="box">
+					<h3>Fediverse</h3>
+					<p>Weitere kleinere Mitteilungen findest du unter:</p>
+					<p style="text-align: center;"><i class="fa fa-newspaper-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;<span style="font-size: 1.0em;"><a href="https://pleroma.envs.net/{{ site.community.fediverse }}">@{{ site.community.fediverse }}@pleroma.envs.net</a></span></p>
+				</div>
+
+				<!-- Post Categories -->
+				<div class="box">
+					<h3>Kategorie / Tags</h3>
+					<ul style="list-style: none; margin: 0; padding: 0; text-decoration: none;">
+						{% assign sortedCategories = site.categories | sort %}
+						{% for category in sortedCategories %}
+						<li style="border-bottom: 1px dashed; padding-top: 10px; padding-bottom: 10px;">
+							<a href="{{ site.baseurl }}/news/category/{{ category[0] }}/">{{ category[0] }}</a>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+
+				<!-- Freifunk-Communities -->
+				<div class="box">
+					<p>Im Freifunk Netz {{ site.community.name }} haben sich verschiedene Gemeinden zusammengeschlossen.</p>
+					<h3>Communities:</h3>
+					<ul style="margin: 0; padding: 0;">
+						<blockquote style="margin: 0;">
+							{% for item in site.community.sub_com %}
+								{% if item.link %}
+									<li><a href="{{ item.link }}" target="_blank">{{ item.name }}</a></li>
+								{% else %}
+									<li>{{ item.name }}</li>
+								{% endif %}
+							{% endfor %}
+						</blockquote>
+					</ul>
+				</div>
+
+				<!-- Blog Button -->
+				<section class="box" style="text-align: center;">
+					<a class="button small accent5 icon fa-pen-to-square" href="{{ site.community.url_blog }}">Neuen Blogeintrag schreiben</a>
+				</section>
+
+				<!-- RSS-Feed -->
+				<div>
+					<p class="rss-subscribe">
+						<a href="{{ "/feed.xml" | prepend: site.baseurl }}">
+						<span class="fa-stack fa-sm">
+							<i class="fa fa-square-o fa-stack-2x"></i>
+							<i class="fa fa-rss fa-stack-1x"></i>
+						</span>
+						RSS-Feed
+						</a> abonnieren
+					</p>
+				</div>
+			</div>
+
+			<!-- Paginator -->
+			<div class="12u 12u(3)">
+				{% if paginator.total_pages > 1 %}
+				<div class="pagination">
+					<p>
+					{% if paginator.previous_page %}
+						<a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="icon fa-arrow-left"><span class="label">&laquo; Prev</span></a>
+					{% else %}
+						<span class="icon fa-arrow-left"><span class="label">&laquo; Prev</span></span>
+					{% endif %}
+
+					{% for page in (1..paginator.total_pages) %}
+						{% if page == paginator.page %}
+							<span>{{ page }}</span>
+						{% elsif page == 1 %}
+							<a href="{{ "/news/" | prepend: site.baseurl }}">{{ page }}</a>
+						{% else %}
+							<a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+						{% endif %}
+					{% endfor %}
+
+					{% if paginator.next_page %}
+						<a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="icon fa-arrow-right"><span class="label">Next &raquo;</span></a>
+					{% else %}
+						<span class="icon fa-arrow-right"><span class="label">Next &raquo;</span></span>
+					{% endif %}
+					</p>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</section>
+
+	{% include footer.html %}
+
+	{% include next_meet_day.html %}
+
+	</body>
+</html>
