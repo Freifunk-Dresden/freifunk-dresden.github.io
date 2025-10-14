@@ -87,7 +87,6 @@ Um einen neuen Beitrag zu erstellen brauchst du keine weitere Software. Das Blog
   - Formatierungen können mit den Knöpfen über dem Eingabefeld erstellt werden
   - in dem Reiter "Preview changes" kannst du jederzeit überprüfen, wie dein Post aussehen würde.
   - Author: Das bist du dann sozusagen :)
-  - **category: Stelle sicher das die Kategorie auch im Ordner `category` angelegt ist!**
   - optional: Bilder und Media-Files können in den Ordner `downloads` hochgeladen werden.
   - optional: weitere Formatierungen findet man wenn man nach *"markdown cheat sheet"* sucht, z.B. https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
