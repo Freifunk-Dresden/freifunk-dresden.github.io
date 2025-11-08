@@ -46,7 +46,9 @@ community:
     channel_name: 'Freifunk_DD'
     channel_key_size: '256'
     channel_key: '59tQYtqLXNGBHJlIF5gagKLR5NtlatdgYQHecKfSsHU='
-  fediverse: 'ffdd'
+  fediverse: 
+    instance: 'dresden.network'
+    username: 'Freifunk_Dresden'
   facebook: 'FreifunkDresden'
   instagram: 'freifunkdresden'
 
