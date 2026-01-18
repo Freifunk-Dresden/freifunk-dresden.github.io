@@ -46,7 +46,7 @@ community:
     channel_name: 'Freifunk_DD'
     channel_key_size: '256'
     channel_key: '59tQYtqLXNGBHJlIF5gagKLR5NtlatdgYQHecKfSsHU='
-  fediverse: 
+  fediverse:
     instance: 'dresden.network'
     username: 'Freifunk_Dresden'
   facebook: 'FreifunkDresden'
@@ -101,8 +101,8 @@ community:
     - 'Torsten Rudolph (Vorstandsvorsitzender)'
     - 'Diego Jahn (stellvertretender Vorsitzender)'
     - 'Niklas Merkelt (Schatzmeister)'
-    - 'Stephan Enderlein (Beisitzer)'
     - 'Mirko Tomaschek (Beisitzer)'
+    - 'Nobert M&uuml;ller (Beisitzer)'
 
   # Sub Communities
   sub_com:
