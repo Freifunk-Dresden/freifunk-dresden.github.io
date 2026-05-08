@@ -18,7 +18,7 @@ Es sind daher einige Router "End-of-Life", andere Router müssen weiterhin auf O
 und die restlichen Router konnten auf Openwrt 25 gehoben werden.
 
 Nebem dem Upgrade auf Openwrt 25, war ein kompletter Umbau der Firewall notwendig (iptables wurde
-komplett durch Netfilter ersetzt). \
+komplett durch Netfilter ersetzt).
 
 **Hinweise**:
 - Da es sich um eine Testing-Version handelt, kann diese noch Fehler enthalten. \
