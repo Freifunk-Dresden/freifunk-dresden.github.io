@@ -20,6 +20,12 @@ und die restlichen Router konnten auf Openwrt 25 gehoben werden.
 Nebem dem Upgrade auf Openwrt 25, war ein kompletter Umbau der Firewall notwendig (iptables wurde
 komplett durch Netfilter ersetzt). \
 
+**Hinweise**:
+- Da es sich um eine Testing-Version handelt, kann diese noch Fehler enthalten. \
+Die Firmware wurde intensiv getestet.
+- Die "nightly" Version ist als instabil und unsicher zu betrachten. Das betrifft auch die Sicherheit durch Firewall oder Funktionen, die noch nicht richtig funktionieren. Für normale Nutzer wird von der
+"nightly" abgeraten.
+
 
 ## Haupt-Änderungen seit der letzten Release 8.2.7:
 
