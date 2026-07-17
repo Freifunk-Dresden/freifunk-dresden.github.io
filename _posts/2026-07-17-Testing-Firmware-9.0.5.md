@@ -50,7 +50,6 @@ Diese Geräte sind bereits alter als 20 Jahre und sollten ersetzt werden.
 
 ~~~
 target: [eol.ath79.22.generic] (22.03)
-  Sophos_ap100
   TPLink-tl-wdr3600-v1
   TPLink-tl-wdr4300-v1
   TPLink-tl-wdr7500-v3
