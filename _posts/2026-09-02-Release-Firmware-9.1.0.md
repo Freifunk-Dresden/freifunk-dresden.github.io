@@ -2,7 +2,9 @@
 layout: post
 title: Release Firmware 9.1.0
 author: Lord Alex
-category: News, Firmware
+category: 
+- News
+- Firmware
 ---
 
 Hallo liebe Freifunker-Gemeinschaft,  
